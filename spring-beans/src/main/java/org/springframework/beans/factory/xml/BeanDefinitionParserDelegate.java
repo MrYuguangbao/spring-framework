@@ -434,8 +434,10 @@ public class BeanDefinitionParserDelegate {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
 
+		// 解析其它标签
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
+			// 如果检测到bean没有指定beanName,则使用默认规则生成一个beanName
 			if (!StringUtils.hasText(beanName)) {
 				try {
 					if (containingBean != null) {
@@ -512,8 +514,9 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		try {
+			// 创建用来承载属性的GenericBeanDefinition
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
-
+			// 解析各种属性：primary,init-method,destory-method等等属性
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
@@ -523,6 +526,7 @@ public class BeanDefinitionParserDelegate {
 
 			parseConstructorArgElements(ele, bd);
 			parsePropertyElements(ele, bd);
+			// 自动注入时，通过Qulifier指定Bean的名称，用来消除歧义
 			parseQualifierElements(ele, bd);
 
 			bd.setResource(this.readerContext.getResource());

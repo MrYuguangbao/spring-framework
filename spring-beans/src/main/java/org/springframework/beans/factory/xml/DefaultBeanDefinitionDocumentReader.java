@@ -145,8 +145,10 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			}
 		}
 
+		// 解析前处理，留给子类实现
 		preProcessXml(root);
 		parseBeanDefinitions(root, this.delegate);
+		// 解析后处理，留给子类实现
 		postProcessXml(root);
 
 		this.delegate = parent;
@@ -173,9 +175,11 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 				if (node instanceof Element) {
 					Element ele = (Element) node;
 					if (delegate.isDefaultNamespace(ele)) {
+						// bean默认声明形式,如：<bean id="xx" class="xxx" />
 						parseDefaultElement(ele, delegate);
 					}
 					else {
+						// 自定义声明，如：<tx:annotation-driven />
 						delegate.parseCustomElement(ele);
 					}
 				}
