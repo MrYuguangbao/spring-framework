@@ -3,6 +3,7 @@ package org.springframework.demo;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.SpringVersion;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +16,13 @@ import java.time.LocalDateTime;
  */
 public class App {
 
-
 	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-		Hello hello = (Hello) ac.getBean("hello");
-		hello.sayHello();
+		System.out.println(SpringVersion.getVersion());
+		//ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		/*A a = (A) ac.getBean("entityA");
+		a.show();*/
+		/*Hello hello = (Hello) ac.getBean("hello");
+		hello.sayHello();*/
 	}
 
 }

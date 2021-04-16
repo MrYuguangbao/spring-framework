@@ -65,4 +65,5 @@ settings.gradle.projectsLoaded {
 }
 include 'spring-artist'
 include 'spring-ygb'
+include 'artist-spring'
 
