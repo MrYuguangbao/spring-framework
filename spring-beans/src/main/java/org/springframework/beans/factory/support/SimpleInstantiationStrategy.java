@@ -60,6 +60,7 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 	@Override
 	public Object instantiate(RootBeanDefinition bd, @Nullable String beanName, BeanFactory owner) {
 		// Don't override the class with CGLIB if no overrides.
+		// 如果没有需要动态改变的方法，出于方便直接反射就可以
 		if (!bd.hasMethodOverrides()) {
 			Constructor<?> constructorToUse;
 			synchronized (bd.constructorArgumentLock) {
@@ -78,16 +79,15 @@ public class SimpleInstantiationStrategy implements InstantiationStrategy {
 							constructorToUse = clazz.getDeclaredConstructor();
 						}
 						bd.resolvedConstructorOrFactoryMethod = constructorToUse;
-					}
-					catch (Throwable ex) {
+					} catch (Throwable ex) {
 						throw new BeanInstantiationException(clazz, "No default constructor found", ex);
 					}
 				}
 			}
 			return BeanUtils.instantiateClass(constructorToUse);
-		}
-		else {
+		} else {
 			// Must generate CGLIB subclass.
+			// 如果使用了lookup或replace这两个特性，需要通过动态代理把这两个特性对应的逻辑的拦截器增强设置进去，返回值是：包含拦截器的代理实例
 			return instantiateWithMethodInjection(bd, beanName, owner);
 		}
 	}

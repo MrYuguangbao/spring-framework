@@ -12,6 +12,7 @@
 	<!-- 自动代理生成器 -->
 	<aop:aspectj-autoproxy />
 
+	<bean id="awareImpl" class="org.springframework.demo.aware.AwareImpl"/>
 <!--	<bean id="hello" class="org.springframework.demo.Hello" />-->
 
 	<!-- set注入 -->

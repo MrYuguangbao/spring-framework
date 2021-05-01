@@ -346,9 +346,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 						}
 					});
 					beanInstance = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
-				}
-
-				else if (mbd.isPrototype()) {
+				} else if (mbd.isPrototype()) {
 					// It's a prototype -> create a new instance.
 					Object prototypeInstance = null;
 					try {
@@ -359,9 +357,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 						afterPrototypeCreation(beanName);
 					}
 					beanInstance = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);
-				}
-
-				else {
+				} else {
 					String scopeName = mbd.getScope();
 					if (!StringUtils.hasLength(scopeName)) {
 						throw new IllegalStateException("No scope name defined for bean ´" + beanName + "'");
@@ -386,14 +382,12 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 						throw new ScopeNotActiveException(beanName, scopeName, ex);
 					}
 				}
-			}
-			catch (BeansException ex) {
+			} catch (BeansException ex) {
 				beanCreation.tag("exception", ex.getClass().toString());
 				beanCreation.tag("message", String.valueOf(ex.getMessage()));
 				cleanupAfterBeanCreationFailure(beanName);
 				throw ex;
-			}
-			finally {
+			} finally {
 				beanCreation.end();
 			}
 		}
@@ -1936,8 +1930,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				// DisposableBean interface, custom destroy method.
 				registerDisposableBean(beanName, new DisposableBeanAdapter(
 						bean, beanName, mbd, getBeanPostProcessorCache().destructionAware, acc));
-			}
-			else {
+			} else {
 				// A bean with a custom scope...
 				Scope scope = this.scopes.get(mbd.getScope());
 				if (scope == null) {
