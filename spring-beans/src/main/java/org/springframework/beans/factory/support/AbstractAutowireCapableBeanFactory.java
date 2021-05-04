@@ -557,6 +557,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
+			// 根据构造函数实例化
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
 		}
 		Object bean = instanceWrapper.getWrappedInstance();
@@ -1187,8 +1188,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			if (autowireNecessary) {
 				// 构造函数自动注入
 				return autowireConstructor(beanName, mbd, null, null);
-			}
-			else {
+			} else {
 				// 使用默认构造函数构造
 				return instantiateBean(beanName, mbd);
 			}
@@ -1682,6 +1682,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					}
 					originalValue = new DependencyDescriptor(new MethodParameter(writeMethod, 0), true);
 				}
+				// 如果存在循环依赖，在此处对依赖的bean重新走getBean的逻辑
 				Object resolvedValue = valueResolver.resolveValueIfNecessary(pv, originalValue);
 				Object convertedValue = resolvedValue;
 				boolean convertible = bw.isWritableProperty(propertyName) &&
@@ -1783,7 +1784,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			// 初始化bean之后应用后处理器
 			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
 		}
-
 		return wrappedBean;
 	}
 
