@@ -1,5 +1,7 @@
 package org.springframework.demo;
 
+import org.springframework.demo.circularref.B;
+
 /**
  * @Author: admin
  * @Description: 测试循环依赖-A
@@ -9,7 +11,7 @@ package org.springframework.demo;
  */
 public class A {
 
-	private B b;
+	private org.springframework.demo.circularref.B b;
 
 	public A() {}
 
